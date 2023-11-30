@@ -14,8 +14,10 @@
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-prettier": "^9.0.0",
     "next": "14.0.3",
+    "notion-client": "^6.16.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-notion-x": "^6.16.0"
   },
   "devDependencies": {
     "@types/node": "^20",
