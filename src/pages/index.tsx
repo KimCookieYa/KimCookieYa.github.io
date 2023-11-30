@@ -3,6 +3,7 @@ import { NotionAPI } from 'notion-client';
 import { ExtendedRecordMap } from 'notion-types';
 import { NotionRenderer } from 'react-notion-x';
 import { Collection } from 'react-notion-x/build/third-party/collection';
+import { routerData } from '../../components/router/route';
 
 export default function Home(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const recordMap = props.recordMap;
@@ -22,8 +23,10 @@ export default function Home(props: InferGetStaticPropsType<typeof getStaticProp
 }
 
 export const getStaticProps = (async () => {
+  const notionId = routerData.filter((item) => item.isNotion && item.label === 'Home')[0].notionId;
+
   const notion = new NotionAPI();
-  const recordMap: ExtendedRecordMap = await notion.getPage('c2f734b31938417d879063c831fb2759');
+  const recordMap: ExtendedRecordMap = await notion.getPage(notionId);
   return {
     props: {
       recordMap,
