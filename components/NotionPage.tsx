@@ -13,6 +13,9 @@ const Collection = dynamic(() =>
   import('react-notion-x/build/third-party/collection').then((m) => m.Collection)
 );
 const Modal = dynamic(() => import('react-notion-x/build/third-party/modal').then((m) => m.Modal));
+const Equation = dynamic(() =>
+  import('react-notion-x/build/third-party/equation').then((m) => m.Equation)
+);
 
 export default function NotionPage({
   recordMap,
@@ -36,7 +39,6 @@ export default function NotionPage({
   }
 
   const title = getPageTitle(recordMap);
-  console.log('notionpage');
 
   // useful for debugging from the dev console
   if (typeof window !== 'undefined') {
@@ -88,6 +90,7 @@ export default function NotionPage({
           nextLink: Link,
           Collection,
           Modal,
+          Equation,
         }}
       />
     </>
