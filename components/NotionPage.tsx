@@ -100,5 +100,5 @@ export default function NotionPage({
 NotionPage.defaultProps = {
   previewImagesEnabled: true,
   rootPageId: '',
-  rootDomain: '3000',
+  rootDomain: '8080',
 };

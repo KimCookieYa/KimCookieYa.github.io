@@ -2,6 +2,7 @@ import { ExtendedRecordMap } from 'notion-types';
 import { getAllPagesInSpace } from 'notion-utils';
 import { defaultMapPageUrl } from 'react-notion-x';
 
+import { GetStaticProps } from 'next';
 import * as notion from '../lib/notion';
 import NotionPage from '../../components/NotionPage';
 import {
@@ -12,8 +13,8 @@ import {
   rootNotionSpaceId,
 } from '../lib/config';
 
-export const getStaticProps = async (context) => {
-  const pageId = context.params.pageId as string;
+export const getStaticProps = (async (context) => {
+  const pageId = context.params?.pageId as string;
   const recordMap = await notion.getPage(pageId);
 
   return {
@@ -22,7 +23,9 @@ export const getStaticProps = async (context) => {
     },
     revalidate: 10,
   };
-};
+}) satisfies GetStaticProps<{
+  recordMap: ExtendedRecordMap;
+}>;
 
 export async function getStaticPaths() {
   if (isDev) {

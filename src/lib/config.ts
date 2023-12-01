@@ -8,5 +8,5 @@ export const useOfficialNotionAPI =
 
 export const isDev = process.env.NODE_ENV === 'development' || !process.env.NODE_ENV;
 
-export const port = process.env.PORT || 3000;
-export const rootDomain = isDev ? `localhost:${port}` : '3000';
+export const port = process.env.PORT || 8080;
+export const rootDomain = isDev ? `localhost:${port}` : '8080';
