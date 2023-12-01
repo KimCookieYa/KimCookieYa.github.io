@@ -1,35 +1,28 @@
-import type { InferGetStaticPropsType, GetStaticProps } from 'next';
-import { NotionAPI } from 'notion-client';
 import { ExtendedRecordMap } from 'notion-types';
-import { NotionRenderer } from 'react-notion-x';
-import { Collection } from 'react-notion-x/build/third-party/collection';
-import { routerData } from '../../components/router/route';
 
-export default function Home(props: InferGetStaticPropsType<typeof getStaticProps>) {
-  const recordMap = props.recordMap;
-  return (
-    <div>
-      Hello, World!
-      <NotionRenderer
-        recordMap={recordMap}
-        fullPage
-        darkMode={false}
-        components={{
-          Collection,
-        }}
-      />
-    </div>
-  );
-}
+import * as notion from '../lib/notion';
+import NotionPage from '../../components/NotionPage';
+import { previewImagesEnabled, rootDomain, rootNotionPageId } from '../lib/config';
 
-export const getStaticProps = (async () => {
-  const notionId = routerData.filter((item) => item.isNotion && item.label === 'Home')[0].notionId;
+export const getStaticProps = async () => {
+  const pageId = rootNotionPageId;
+  const recordMap = await notion.getPage(pageId);
 
-  const notion = new NotionAPI();
-  const recordMap: ExtendedRecordMap = await notion.getPage(notionId);
   return {
     props: {
       recordMap,
     },
+    revalidate: 3600,
   };
-}) satisfies GetStaticProps<{ recordMap: ExtendedRecordMap }>;
+};
+
+export default function Page({ recordMap }: { recordMap: ExtendedRecordMap }) {
+  return (
+    <NotionPage
+      recordMap={recordMap}
+      rootDomain={rootDomain}
+      rootPageId={rootNotionPageId}
+      previewImagesEnabled={previewImagesEnabled}
+    />
+  );
+}
