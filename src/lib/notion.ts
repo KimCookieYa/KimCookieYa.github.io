@@ -1,13 +1,9 @@
-import { Client } from '@notionhq/client';
 import { NotionAPI } from 'notion-client';
-import { NotionCompatAPI } from 'notion-compat';
 import { ExtendedRecordMap, SearchParams, SearchResults } from 'notion-types';
 
 import { previewImagesEnabled, useOfficialNotionAPI } from './config';
 
-const notion = useOfficialNotionAPI
-  ? new NotionCompatAPI(new Client({ auth: process.env.NOTION_TOKEN }))
-  : new NotionAPI();
+const notion = new NotionAPI();
 
 if (useOfficialNotionAPI) {
   console.warn(
