@@ -21,7 +21,6 @@ export const getStaticProps = (async (context) => {
     props: {
       recordMap,
     },
-    revalidate: 10,
   };
 }) satisfies GetStaticProps<{
   recordMap: ExtendedRecordMap;
