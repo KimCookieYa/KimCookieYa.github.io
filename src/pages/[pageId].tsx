@@ -21,8 +21,7 @@ export const getStaticProps = (async (context) => {
   const foundRouterItem = routerData.find((router) => router.path === pageId);
   if (foundRouterItem && foundRouterItem.notionId) {
     recordMap = await notion.getPage(foundRouterItem!.notionId);
-  }
-  else {
+  } else {
     recordMap = await notion.getPage(pageId);
   }
 
@@ -30,6 +29,7 @@ export const getStaticProps = (async (context) => {
     props: {
       recordMap,
     },
+    revalidate: 10,
   };
 }) satisfies GetStaticProps<{
   recordMap: ExtendedRecordMap;
@@ -39,7 +39,7 @@ export async function getStaticPaths() {
   if (isDev) {
     return {
       paths: [],
-      fallback: false,
+      fallback: true,
     };
   }
 
@@ -54,7 +54,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 }
 
