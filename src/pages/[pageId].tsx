@@ -2,7 +2,6 @@ import { ExtendedRecordMap } from 'notion-types';
 import { getAllPagesInSpace } from 'notion-utils';
 import { defaultMapPageUrl } from 'react-notion-x';
 import { GetStaticProps } from 'next';
-import { redirect } from 'next/navigation';
 
 import * as notion from '../lib/notion';
 import NotionPage from '../components/NotionPage';
@@ -39,7 +38,7 @@ export async function getStaticPaths() {
   if (isDev) {
     return {
       paths: [],
-      fallback: true,
+      fallback: false,
     };
   }
 
@@ -54,7 +53,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: true,
+    fallback: false,
   };
 }
 
