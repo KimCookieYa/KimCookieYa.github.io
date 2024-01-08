@@ -17,12 +17,14 @@ import { routerData } from '@/components/router/route';
 
 export const getStaticProps = (async (context) => {
   const pageId = context.params?.pageId as string;
-  if (pageId === undefined) {
-    return {
-      notFound: true,
-    };
+  let recordMap = {} as ExtendedRecordMap;
+  const foundRouterItem = routerData.find((router) => router.path === pageId);
+  if (foundRouterItem) {
+    recordMap = await notion.getPage(foundRouterItem!.notionId);
   }
-  const recordMap = await notion.getPage(pageId);
+  else {
+    recordMap = await notion.getPage(pageId);
+  }
 
   return {
     props: {

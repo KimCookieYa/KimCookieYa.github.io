@@ -1,27 +1,14 @@
-import { ExtendedRecordMap } from 'notion-types';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
-import * as notion from '../lib/notion';
-import NotionPage from '../components/NotionPage';
-import { previewImagesEnabled, rootDomain, rootNotionPageId } from '../lib/config';
+const IndexPage = () => {
+  const router = useRouter();
 
-export const getStaticProps = async () => {
-  const pageId = rootNotionPageId;
-  const recordMap = await notion.getPage(pageId);
+  useEffect(() => {
+    router.push('/home');
+  }, [router]);
 
-  return {
-    props: {
-      recordMap,
-    },
-  };
+  return <p>Redirecting...</p>;
 };
 
-export default function Page({ recordMap }: { recordMap: ExtendedRecordMap }) {
-  return (
-    <NotionPage
-      recordMap={recordMap}
-      rootDomain={rootDomain}
-      rootPageId={rootNotionPageId}
-      previewImagesEnabled={previewImagesEnabled}
-    />
-  );
-}
+export default IndexPage;
