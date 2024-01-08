@@ -1,10 +1,8 @@
 import dynamic from 'next/dynamic';
-import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { ExtendedRecordMap } from 'notion-types';
-import { getPageTitle } from 'notion-utils';
 import { NotionRenderer } from 'react-notion-x';
 
 import Loading from './Loading';
@@ -37,9 +35,6 @@ export default function NotionPage({
   if (!recordMap) {
     return null;
   }
-
-  const title = getPageTitle(recordMap);
-
   // useful for debugging from the dev console
   if (typeof window !== 'undefined') {
     const keys = Object.keys(recordMap?.block || {});
@@ -49,37 +44,8 @@ export default function NotionPage({
     g.block = block;
   }
 
-  const socialDescription = 'React Notion X Demo';
-  const socialImage = 'https://react-notion-x-demo.transitivebullsh.it/social.jpg';
-
   return (
-    <>
-      <Head>
-        {socialDescription && (
-          <>
-            <meta name="description" content={socialDescription} />
-            <meta property="og:description" content={socialDescription} />
-            <meta name="twitter:description" content={socialDescription} />
-          </>
-        )}
-
-        {socialImage ? (
-          <>
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:image" content={socialImage} />
-            <meta property="og:image" content={socialImage} />
-          </>
-        ) : (
-          <meta name="twitter:card" content="summary" />
-        )}
-
-        <title>{title}</title>
-        <meta property="og:title" content={title} />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:creator" content="@transitive_bs" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+    <div className="mt-20">
       <NotionRenderer
         recordMap={recordMap}
         darkMode={false}
@@ -92,8 +58,9 @@ export default function NotionPage({
           Modal,
           Equation,
         }}
+        className=""
       />
-    </>
+    </div>
   );
 }
 

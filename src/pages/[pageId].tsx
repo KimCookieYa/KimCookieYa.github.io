@@ -22,14 +22,6 @@ export const getStaticProps = (async (context) => {
       notFound: true,
     };
   }
-
-  const findedRouter = routerData.find((item) => {
-    item.notionId === pageId;
-  });
-  if (findedRouter) {
-    redirect(findedRouter.path);
-  }
-
   const recordMap = await notion.getPage(pageId);
 
   return {
