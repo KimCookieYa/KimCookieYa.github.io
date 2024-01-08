@@ -1,10 +1,11 @@
 import { ExtendedRecordMap } from 'notion-types';
 import { getAllPagesInSpace } from 'notion-utils';
 import { defaultMapPageUrl } from 'react-notion-x';
-
 import { GetStaticProps } from 'next';
+import { redirect } from 'next/navigation';
+
 import * as notion from '../lib/notion';
-import NotionPage from '../../components/NotionPage';
+import NotionPage from '../components/NotionPage';
 import {
   isDev,
   previewImagesEnabled,
@@ -12,9 +13,23 @@ import {
   rootNotionPageId,
   rootNotionSpaceId,
 } from '../lib/config';
+import { routerData } from '@/components/router/route';
 
 export const getStaticProps = (async (context) => {
   const pageId = context.params?.pageId as string;
+  if (pageId === undefined) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const findedRouter = routerData.find((item) => {
+    item.notionId === pageId;
+  });
+  if (findedRouter) {
+    redirect(findedRouter.path);
+  }
+
   const recordMap = await notion.getPage(pageId);
 
   return {
@@ -30,7 +45,7 @@ export async function getStaticPaths() {
   if (isDev) {
     return {
       paths: [],
-      fallback: true,
+      fallback: false,
     };
   }
 
@@ -45,7 +60,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: true,
+    fallback: false,
   };
 }
 
