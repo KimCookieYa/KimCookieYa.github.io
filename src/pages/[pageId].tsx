@@ -19,7 +19,7 @@ export const getStaticProps = (async (context) => {
   const pageId = context.params?.pageId as string;
   let recordMap = {} as ExtendedRecordMap;
   const foundRouterItem = routerData.find((router) => router.path === pageId);
-  if (foundRouterItem) {
+  if (foundRouterItem && foundRouterItem.notionId) {
     recordMap = await notion.getPage(foundRouterItem!.notionId);
   }
   else {
